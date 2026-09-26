@@ -1,0 +1,7 @@
+# D-001 — Bloques del MVP y modelo de ubicaciones
+
+- Estado: vigente
+- Contexto: definir el alcance del MVP y cómo se representa dónde se guarda cada producto.
+- Decisión: el MVP permite cargar y editar productos, definir ubicaciones, registrar stock y buscar productos por nombre, marca o categoría desde la página principal (dashboard), viendo dónde están y cuánto hay. Se organiza en tres bloques: Catálogo (qué es un producto: nombre, marca, categoría; no sabe de ubicaciones ni cantidades), Ubicaciones (tres niveles fijos, pasillo > estantería > estante, cuyos nombres el cliente puede cambiar; no sabe de productos) y Stock (cantidad de un producto en una ubicación; es el único bloque que conoce a los otros dos). Un mismo producto puede tener stock en varias ubicaciones.
+- Descartado: ubicación como atributos del producto (lo ata a un solo lugar, mezcla responsabilidades y la ubicación no existe por sí misma); árbol de ubicaciones de profundidad libre (más complejo de lo que el MVP necesita); varios modos de organización (no están definidos y multiplican el trabajo); búsquedas relacionadas y mapa visual (fuera del MVP; el mapa, si se hace, leerá de Ubicaciones).
+- Consecuencias: agregar otras formas de organización más adelante no debería tocar Catálogo ni Stock. No se dejan ganchos ni configuraciones preparadas para modos futuros. Usuarios y login quedan fuera del MVP (ver D-002).
