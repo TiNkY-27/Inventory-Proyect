@@ -3,7 +3,7 @@
 | # | Título | Estado |
 |---|--------|--------|
 | [000](000-relevar-estado-inicial.md) | Relevar estado inicial del proyecto | hecha |
-| [001](001-configurar-persistencia-base.md) | Configurar la persistencia base | pendiente |
+| [001](001-configurar-persistencia-base.md) | Configurar la persistencia base | hecha |
 | [002](002-crear-bloque-catalogo.md) | Crear el bloque Catálogo | pendiente |
 | [003](003-crear-bloque-ubicaciones.md) | Crear el bloque Ubicaciones | pendiente |
 | [004](004-crear-bloque-stock.md) | Crear el bloque Stock | pendiente |
