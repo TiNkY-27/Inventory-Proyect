@@ -9,4 +9,4 @@
 | [004](004-crear-bloque-stock.md) | Crear el bloque Stock | pendiente |
 | [005](005-cargar-datos-de-ejemplo.md) | Cargar datos de ejemplo | pendiente |
 | [006](006-armar-dashboard-con-buscador.md) | Armar el dashboard con buscador | pendiente |
-| [007](007-independizar-conexion-de-sveltekit.md) | Independizar la conexión de SvelteKit | pendiente |
+| [007](007-independizar-conexion-de-sveltekit.md) | Independizar la conexión de SvelteKit | hecha |
