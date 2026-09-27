@@ -15,6 +15,20 @@
       "when": 1790468556479,
       "tag": "0001_pretty_maximus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790468758618,
+      "tag": "0002_nasty_shaman",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790468871298,
+      "tag": "0003_blue_jane_foster",
+      "breakpoints": true
     }
   ]
 }
