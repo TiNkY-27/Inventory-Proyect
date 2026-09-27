@@ -7,7 +7,7 @@
 | [002](002-crear-bloque-catalogo.md) | Crear el bloque Catálogo | hecha |
 | [003](003-crear-bloque-ubicaciones.md) | Crear el bloque Ubicaciones | hecha |
 | [004](004-crear-bloque-stock.md) | Crear el bloque Stock | hecha |
-| [005](005-cargar-datos-de-ejemplo.md) | Cargar datos de ejemplo | pendiente |
+| [005](005-cargar-datos-de-ejemplo.md) | Cargar datos de ejemplo | hecha |
 | [006](006-armar-dashboard-con-buscador.md) | Armar el dashboard con buscador | pendiente |
 | [007](007-independizar-conexion-de-sveltekit.md) | Independizar la conexión de SvelteKit | hecha |
 | [008](008-centralizar-deteccion-rechazo-clave-foranea.md) | Centralizar la detección de rechazo por clave foránea | hecha |
