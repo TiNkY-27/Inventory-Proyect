@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, inArray } from 'drizzle-orm';
 import { db } from '$lib/server/db';
 import * as catalogo from '$lib/server/catalogo';
 import * as ubicaciones from '$lib/server/ubicaciones';
@@ -47,4 +47,30 @@ export function obtenerStockDeProducto(productoId: number): StockDeProducto {
 		ubicaciones: conStock,
 		total: conStock.reduce((suma, u) => suma + u.cantidad, 0)
 	};
+}
+
+// Stock de varios productos con una sola consulta a la tabla de stock.
+// Devuelve una entrada por cada id pedido (sin stock: lista vacía y total 0).
+export function obtenerStockDeProductos(productoIds: number[]): Map<number, StockDeProducto> {
+	const resultado = new Map<number, StockDeProducto>(
+		productoIds.map((id) => [id, { ubicaciones: [], total: 0 }])
+	);
+	if (productoIds.length === 0) return resultado;
+
+	const filas = db.select().from(stock).where(inArray(stock.productoId, productoIds)).all();
+	// listarNivel3 viene ordenado por ruta; su posición da el mismo orden que obtenerStockDeProducto.
+	const estantes = new Map(ubicaciones.listarNivel3().map((u, posicion) => [u.id, { ...u, posicion }]));
+
+	for (const fila of filas) {
+		const estante = estantes.get(fila.ubicacionId);
+		const entrada = resultado.get(fila.productoId);
+		if (!estante || !entrada) continue;
+		entrada.ubicaciones.push({ ubicacionId: estante.id, ruta: estante.ruta, cantidad: fila.cantidad });
+		entrada.total += fila.cantidad;
+	}
+	const posicion = (id: number) => estantes.get(id)!.posicion;
+	for (const entrada of resultado.values()) {
+		entrada.ubicaciones.sort((a, b) => posicion(a.ubicacionId) - posicion(b.ubicacionId));
+	}
+	return resultado;
 }

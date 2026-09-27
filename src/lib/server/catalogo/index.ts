@@ -1,4 +1,4 @@
-import { eq, sql } from 'drizzle-orm';
+import { eq, or, sql, type AnyColumn } from 'drizzle-orm';
 import { db, esRechazoPorClaveForanea } from '$lib/server/db';
 import { productos } from './tablas';
 
@@ -74,5 +74,25 @@ export function listarTodos(): Producto[] {
 		.select()
 		.from(productos)
 		.orderBy(sql`lower(${productos.nombre})`, productos.id)
+		.all();
+}
+
+const MAXIMO_RESULTADOS = 50;
+
+// Coincidencia parcial en nombre, marca o categoría, sin distinguir mayúsculas.
+// Los acentos no se normalizan: "latex" no encuentra "Látex".
+export function buscar(texto: string): Producto[] {
+	const buscado = texto.trim().toLowerCase();
+	if (!buscado) return [];
+	// % y _ son comodines de LIKE: se escapan para buscarlos como texto.
+	const patron = `%${buscado.replace(/[\\%_]/g, '\\$&')}%`;
+	const contiene = (columna: AnyColumn) =>
+		sql`lower(${columna}) like ${patron} escape '\\'`;
+	return db
+		.select()
+		.from(productos)
+		.where(or(contiene(productos.nombre), contiene(productos.marca), contiene(productos.categoria)))
+		.orderBy(sql`lower(${productos.nombre})`, productos.id)
+		.limit(MAXIMO_RESULTADOS)
 		.all();
 }
