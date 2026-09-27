@@ -11,6 +11,7 @@
 	<ul class="mx-auto flex max-w-4xl gap-6 px-4 py-3 text-sm font-medium">
 		<li><a href="/" class="hover:underline">Inicio</a></li>
 		<li><a href="/productos" class="hover:underline">Productos</a></li>
+		<li><a href="/ubicaciones" class="hover:underline">Ubicaciones</a></li>
 	</ul>
 </nav>
 {@render children()}
