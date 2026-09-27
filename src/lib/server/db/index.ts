@@ -10,3 +10,8 @@ const cliente = new Database(process.env.DATABASE_URL);
 cliente.pragma('foreign_keys = ON');
 
 export const db = drizzle(cliente);
+
+// Único lugar que conoce el código de error del motor: al cambiar de base, se cambia acá.
+export function esRechazoPorClaveForanea(e: unknown): boolean {
+	return e instanceof Error && 'code' in e && e.code === 'SQLITE_CONSTRAINT_FOREIGNKEY';
+}

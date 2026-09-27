@@ -1,5 +1,5 @@
 import { eq, sql } from 'drizzle-orm';
-import { db } from '$lib/server/db';
+import { db, esRechazoPorClaveForanea } from '$lib/server/db';
 import { productos } from './tablas';
 
 export { productos };
@@ -34,11 +34,6 @@ function opcional(texto: string | null | undefined): string | null {
 	return limpio ? limpio : null;
 }
 
-// La base rechaza el borrado cuando otra tabla referencia al producto.
-function esRechazoPorReferencia(e: unknown): boolean {
-	return e instanceof Error && 'code' in e && e.code === 'SQLITE_CONSTRAINT_FOREIGNKEY';
-}
-
 export function crear(datos: DatosProducto): Resultado<Producto> {
 	const validado = validar(datos);
 	if (!validado.ok) return validado;
@@ -63,7 +58,8 @@ export function eliminar(id: number): Resultado {
 	try {
 		db.delete(productos).where(eq(productos.id, id)).run();
 	} catch (e) {
-		if (esRechazoPorReferencia(e)) return { ok: false, error: 'No se puede eliminar: está en uso' };
+		// La base rechaza el borrado cuando otra tabla referencia al producto.
+		if (esRechazoPorClaveForanea(e)) return { ok: false, error: 'No se puede eliminar: está en uso' };
 		throw e;
 	}
 	return { ok: true, valor: undefined };
